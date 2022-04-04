@@ -25,7 +25,7 @@ namespace MessageBoxCreator
             string windowtitle = textBox2.Text;
             int icon = comboBox1.SelectedIndex;
             int options = comboBox2.SelectedIndex;
-            if (icon == -1 || options == -1 || content.Length == 0 || windowtitle.Length == 0)
+            if ((comboBox1.Enabled && icon == -1) || options == -1 || content.Length == 0 || windowtitle.Length == 0)
             {
                 error("preview");
                 return;
@@ -54,16 +54,18 @@ namespace MessageBoxCreator
             // export
             for (int i=0; i<listBox1.Items.Count; i++)
             {
-                if (messages[i] == null || titles[i] == null || messages[i] == "" || titles[i] == "" || icons[i] < 0 || buttons[i] < 0)
+                if (messages[i] == null || titles[i] == null || messages[i] == "" || titles[i] == "" || icons[i] < 0 || buttons[i] < 0 || answerRequirements[Math.Max(i, 1)] == -1)
                 {
-                    error("message box");
+                    error("message box", i + 1);
                     return;
                 }
             }
             string filecontent = "";
             for (int i=0; i<listBox1.Items.Count; i++)
             {
+                if (i > 0 && answerRequirements[i] > 0) filecontent += "If X=" + answerRequirements[i] + " Then\n\n";
                 filecontent += "X=MsgBox(\"" + messages[i] + "\", " + buttons[i] + "+" + (icons[i] * 16) + ", \"" + titles[i] + "\")\n\n";
+                if (i > 0 && answerRequirements[i] > 0) filecontent += "End If\n\n";
             }
             saveFileDialog1.Filter = "VBScript|*.vbs";
             saveFileDialog1.Title = "Export Message Box";
@@ -78,14 +80,17 @@ namespace MessageBoxCreator
             }
         }
 
-        private void error(string of_what)
+        private void error(string of_what, int where = 0)
         {
-            MessageBox.Show("Check if everything is entered (correctly).", "Cannot generate " + of_what, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            string msg = "Check if everything is entered correctly";
+            msg += (where > 0) ? " at message box " + where + "." : ".";
+            MessageBox.Show(msg, "Cannot generate " + of_what, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private string[] messages = new string[10];
         private string[] titles = new string[10];
         private int[] icons = new int[10] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
         private int[] buttons = new int[10] {-1, -1, -1, -1, -1, -1, -1, -1, -1 ,-1};
+        private int[] answerRequirements = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         private void success(string content)
         {
@@ -94,29 +99,33 @@ namespace MessageBoxCreator
         }
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            button1.Enabled = (listBox1.SelectedIndex >= 0);
             button2.Enabled = (listBox1.SelectedIndex >= 0);
             button4.Enabled = (listBox1.SelectedIndex >= 0);
             groupBox1.Enabled = (listBox1.SelectedIndex >= 0);
+            label10.Enabled = comboBox3.Enabled = (listBox1.SelectedIndex > 0);
 
             if (listBox1.SelectedIndex < 0) return;
             label6.Enabled = true;
+            checkBox1.Checked = (icons[listBox1.SelectedIndex] == 256);
             textBox1.Text = messages[listBox1.SelectedIndex];
             textBox2.Text = titles[listBox1.SelectedIndex];
-            comboBox1.SelectedIndex = icons[listBox1.SelectedIndex];
+            comboBox1.Enabled = (icons[listBox1.SelectedIndex] != 256);
+            comboBox1.SelectedIndex = (icons[listBox1.SelectedIndex] == 256) ? 0 : icons[listBox1.SelectedIndex];
             comboBox2.SelectedIndex = buttons[listBox1.SelectedIndex];
+            comboBox3.SelectedIndex = (listBox1.SelectedIndex == 0) ? -1 : answerRequirements[listBox1.SelectedIndex];
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             // add
             if (listBox1.Items.Count >= 9) button3.Enabled = false;
-            button5.Enabled = true;
+            button1.Enabled = button5.Enabled = true;
 
             messages.Concat(new string[] { "" }).ToArray();
             titles.Concat(new string[] { "" }).ToArray();
             icons.Concat(new int[] { -1 }).ToArray();
             buttons.Concat(new int[] { -1 }).ToArray();
+            answerRequirements.Concat(new int[] { 0 }).ToArray();
             int itemIndex = listBox1.Items.Count + 1;
             listBox1.Items.Add("Message box " + itemIndex);
         }
@@ -128,12 +137,12 @@ namespace MessageBoxCreator
             if (MessageBox.Show("Are you sure you want to remove box " + (listBox1.SelectedIndex + 1) + "?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 textBox1.Text = textBox2.Text = "";
-                comboBox1.SelectedIndex = comboBox2.SelectedIndex = -1;
-                label6.Enabled = false;
+                comboBox1.SelectedIndex = comboBox2.SelectedIndex = comboBox3.SelectedIndex = -1;
+                checkBox1.Checked = label6.Enabled = false;
 
                 listBox1.Items.RemoveAt(listBox1.SelectedIndex);
                 button3.Enabled = true;
-                if (listBox1.Items.Count == 0) button5.Enabled = false;
+                if (listBox1.Items.Count == 0) button1.Enabled = button5.Enabled = false;
                 for (int i = 0; i < listBox1.Items.Count; i++) listBox1.Items[i] = "Message box " + (i + 1);
             }
         }
@@ -178,7 +187,7 @@ namespace MessageBoxCreator
                 {
                     writer.WriteLine(messages[i]);
                     writer.WriteLine(titles[i]);
-                    writer.WriteLine(icons[i] + ";" + buttons[i] + "\n");
+                    writer.WriteLine(icons[i] + ";" + buttons[i] + ";" + answerRequirements[i] + "\n");
                 }
                 writer.Dispose();
                 writer.Close();
@@ -195,6 +204,12 @@ namespace MessageBoxCreator
             fileDialog.Title = "Load Configuration";
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
+                string[] fragments = fileDialog.FileName.Split('.');
+                if (fragments[fragments.Length - 1] != "mbconfig")
+                {
+                    MessageBox.Show("You loaded an invalid file!", "Cannot load file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 textBox1.Text = textBox2.Text = "";
                 comboBox1.SelectedIndex = comboBox2.SelectedIndex = -1;
 
@@ -211,6 +226,7 @@ namespace MessageBoxCreator
                         string[] stats = line.Split(';');
                         icons[index] = int.Parse(stats[0]);
                         buttons[index] = int.Parse(stats[1]);
+                        answerRequirements[index] = int.Parse(stats[2]);
                     }
                     else index++;
                     j++;
@@ -218,11 +234,24 @@ namespace MessageBoxCreator
                 listBox1.Items.Clear();
                 for (int i = 0; i < index; i++) listBox1.Items.Add("Message box " + (i + 1));
                 button3.Enabled = (listBox1.Items.Count < 10);
-                button5.Enabled = true;
+                button1.Enabled = button5.Enabled = true;
                 listBox1.SelectedIndex = -1;
-                groupBox1.Enabled = button4.Enabled = button1.Enabled = button2.Enabled = false;
+                groupBox1.Enabled = button4.Enabled = button2.Enabled = false;
                 success("Configuration loaded!");
             }
         }
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            answerRequirements[listBox1.SelectedIndex] = comboBox3.SelectedIndex;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            label9.Visible = checkBox1.Checked;
+            comboBox1.SelectedIndex = 0;
+            comboBox1.Enabled = (!checkBox1.Checked);
+            icons[listBox1.SelectedIndex] = (checkBox1.Checked) ? 256 : icons[listBox1.SelectedIndex]; // 256 * 16 = 4096 -> always on top number
+        }
+
     }
 }

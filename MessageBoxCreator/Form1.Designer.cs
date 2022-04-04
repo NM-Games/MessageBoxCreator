@@ -31,6 +31,10 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -74,6 +78,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.comboBox3);
+            this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.comboBox2);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -85,10 +93,61 @@
             this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(17, 207);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(696, 164);
+            this.groupBox1.Size = new System.Drawing.Size(696, 233);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Create";
+            this.groupBox1.Text = "Properties";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(22, 160);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(282, 16);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Required answer from previous box to display:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label9.Location = new System.Drawing.Point(192, 197);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(273, 16);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "Note: the icon will no longer be visible!";
+            this.label9.Visible = false;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.Enabled = false;
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "(Any)",
+            "OK",
+            "Cancel",
+            "Abort",
+            "Retry",
+            "Ignore",
+            "Yes",
+            "No"});
+            this.comboBox3.Location = new System.Drawing.Point(335, 156);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(135, 24);
+            this.comboBox3.TabIndex = 10;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(25, 196);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(147, 20);
+            this.checkBox1.TabIndex = 9;
+            this.checkBox1.Text = "Show always on top";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // comboBox2
             // 
@@ -168,7 +227,7 @@
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(620, 387);
+            this.button1.Location = new System.Drawing.Point(620, 459);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(93, 29);
             this.button1.TabIndex = 3;
@@ -179,7 +238,7 @@
             // button2
             // 
             this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(515, 387);
+            this.button2.Location = new System.Drawing.Point(515, 459);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(93, 29);
             this.button2.TabIndex = 4;
@@ -222,7 +281,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Enabled = false;
-            this.label6.Location = new System.Drawing.Point(214, 394);
+            this.label6.Location = new System.Drawing.Point(214, 465);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(270, 16);
             this.label6.TabIndex = 8;
@@ -255,9 +314,9 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Green;
-            this.label8.Location = new System.Drawing.Point(24, 394);
+            this.label8.Location = new System.Drawing.Point(24, 465);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(154, 16);
+            this.label8.Size = new System.Drawing.Size(0, 16);
             this.label8.TabIndex = 11;
             this.label8.Visible = false;
             // 
@@ -286,9 +345,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(732, 438);
-            this.Controls.Add(this.button6);
+            this.ClientSize = new System.Drawing.Size(732, 507);
             this.Controls.Add(this.button5);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.pictureBox1);
@@ -304,7 +363,7 @@
             this.Icon = global::MessageBoxCreator.Properties.Resources.msgboxcreator;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Message Box Creator";
+            this.Text = "Message Box Creator " + ProductVersion;
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -337,6 +396,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label10;
     }
 }
 
