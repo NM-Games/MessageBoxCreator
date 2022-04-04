@@ -1,0 +1,228 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace MessageBoxCreator
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // preview
+            string content = textBox1.Text;
+            string windowtitle = textBox2.Text;
+            int icon = comboBox1.SelectedIndex;
+            int options = comboBox2.SelectedIndex;
+            if (icon == -1 || options == -1 || content.Length == 0 || windowtitle.Length == 0)
+            {
+                error("preview");
+                return;
+            }
+
+            MessageBoxIcon mbi;
+            if (icon == 1) {mbi = MessageBoxIcon.Error;}
+            else if (icon == 2) {mbi = MessageBoxIcon.Question;}
+            else if (icon == 3) {mbi = MessageBoxIcon.Warning;}
+            else if (icon == 4) {mbi = MessageBoxIcon.Information;}
+            else {mbi = MessageBoxIcon.None;}
+            
+            MessageBoxButtons mbb;
+            if (options == 1) { mbb = MessageBoxButtons.OKCancel; }
+            else if (options == 2) { mbb = MessageBoxButtons.AbortRetryIgnore; }
+            else if (options == 3) { mbb = MessageBoxButtons.YesNoCancel; }
+            else if (options == 4) { mbb = MessageBoxButtons.YesNo; }
+            else if (options == 5) { mbb = MessageBoxButtons.RetryCancel; }
+            else { mbb = MessageBoxButtons.OK; }
+
+            MessageBox.Show(content, windowtitle, mbb, mbi);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // export
+            for (int i=0; i<listBox1.Items.Count; i++)
+            {
+                if (messages[i] == null || titles[i] == null || messages[i] == "" || titles[i] == "" || icons[i] < 0 || buttons[i] < 0)
+                {
+                    error("message box");
+                    return;
+                }
+            }
+            string filecontent = "";
+            for (int i=0; i<listBox1.Items.Count; i++)
+            {
+                filecontent += "X=MsgBox(\"" + messages[i] + "\", " + buttons[i] + "+" + (icons[i] * 16) + ", \"" + titles[i] + "\")\n\n";
+            }
+            saveFileDialog1.Filter = "VBScript|*.vbs";
+            saveFileDialog1.Title = "Export Message Box";
+            saveFileDialog1.FileName = "messagebox.vbs";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter writer = new StreamWriter(saveFileDialog1.OpenFile());
+                writer.WriteLine(filecontent);
+                writer.Dispose();
+                writer.Close();
+                success("Exported successfully!");
+            }
+        }
+
+        private void error(string of_what)
+        {
+            MessageBox.Show("Check if everything is entered (correctly).", "Cannot generate " + of_what, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        private string[] messages = new string[10];
+        private string[] titles = new string[10];
+        private int[] icons = new int[10] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        private int[] buttons = new int[10] {-1, -1, -1, -1, -1, -1, -1, -1, -1 ,-1};
+
+        private void success(string content)
+        {
+            label8.Text = content;
+            label8.Visible = true;
+        }
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            button1.Enabled = (listBox1.SelectedIndex >= 0);
+            button2.Enabled = (listBox1.SelectedIndex >= 0);
+            button4.Enabled = (listBox1.SelectedIndex >= 0);
+            groupBox1.Enabled = (listBox1.SelectedIndex >= 0);
+
+            if (listBox1.SelectedIndex < 0) return;
+            label6.Enabled = true;
+            textBox1.Text = messages[listBox1.SelectedIndex];
+            textBox2.Text = titles[listBox1.SelectedIndex];
+            comboBox1.SelectedIndex = icons[listBox1.SelectedIndex];
+            comboBox2.SelectedIndex = buttons[listBox1.SelectedIndex];
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // add
+            if (listBox1.Items.Count >= 9) button3.Enabled = false;
+            button5.Enabled = true;
+
+            messages.Concat(new string[] { "" }).ToArray();
+            titles.Concat(new string[] { "" }).ToArray();
+            icons.Concat(new int[] { -1 }).ToArray();
+            buttons.Concat(new int[] { -1 }).ToArray();
+            int itemIndex = listBox1.Items.Count + 1;
+            listBox1.Items.Add("Message box " + itemIndex);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            // remove
+            if (listBox1.SelectedIndex == -1) return;
+            if (MessageBox.Show("Are you sure you want to remove box " + (listBox1.SelectedIndex + 1) + "?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                textBox1.Text = textBox2.Text = "";
+                comboBox1.SelectedIndex = comboBox2.SelectedIndex = -1;
+                label6.Enabled = false;
+
+                listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+                button3.Enabled = true;
+                if (listBox1.Items.Count == 0) button5.Enabled = false;
+                for (int i = 0; i < listBox1.Items.Count; i++) listBox1.Items[i] = "Message box " + (i + 1);
+            }
+        }
+
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            messages[listBox1.SelectedIndex] = textBox1.Text;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            titles[listBox1.SelectedIndex] = textBox2.Text;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            icons[listBox1.SelectedIndex] = comboBox1.SelectedIndex;
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            buttons[listBox1.SelectedIndex] = comboBox2.SelectedIndex;
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("cmd.exe", "/c start https://nm-games.eu");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            // save
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            fileDialog.Filter = "Message Box Configuration|*.mbconfig";
+            fileDialog.Title = "Save Configuration";
+            fileDialog.FileName = listBox1.Items.Count.ToString() + "_msg_config.mbconfig";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter writer = new StreamWriter(fileDialog.OpenFile());
+                for (int i = 0; i < listBox1.Items.Count; i++)
+                {
+                    writer.WriteLine(messages[i]);
+                    writer.WriteLine(titles[i]);
+                    writer.WriteLine(icons[i] + ";" + buttons[i] + "\n");
+                }
+                writer.Dispose();
+                writer.Close();
+                success("Configuration saved!");
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            // load
+            if (listBox1.Items.Count > 0 && MessageBox.Show("Loading a configuration overwrites the current one.\nDo you want to proceed?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Message Box Configuration|*.mbconfig";
+            fileDialog.Title = "Load Configuration";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBox1.Text = textBox2.Text = "";
+                comboBox1.SelectedIndex = comboBox2.SelectedIndex = -1;
+
+                StreamReader reader = new StreamReader(fileDialog.OpenFile());
+                int j = 0;
+                int index = 0;
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (j % 4 == 0) messages[index] = line;
+                    else if (j % 4 == 1) titles[index] = line;
+                    else if (j % 4 == 2)
+                    {
+                        string[] stats = line.Split(';');
+                        icons[index] = int.Parse(stats[0]);
+                        buttons[index] = int.Parse(stats[1]);
+                    }
+                    else index++;
+                    j++;
+                }
+                listBox1.Items.Clear();
+                for (int i = 0; i < index; i++) listBox1.Items.Add("Message box " + (i + 1));
+                button3.Enabled = (listBox1.Items.Count < 10);
+                button5.Enabled = true;
+                listBox1.SelectedIndex = -1;
+                groupBox1.Enabled = button4.Enabled = button1.Enabled = button2.Enabled = false;
+                success("Configuration loaded!");
+            }
+        }
+    }
+}
