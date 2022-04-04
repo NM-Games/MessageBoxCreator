@@ -16,6 +16,37 @@ namespace MessageBoxCreator
         public Form1()
         {
             InitializeComponent();
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length == 2)
+            {
+                string[] fragments = args[1].Split('.');
+                string[] text = System.IO.File.ReadAllLines(args[1]);
+                if (fragments[fragments.Length - 1] != "mbconfig")
+                {
+                    MessageBox.Show("You loaded an invalid file!", "Cannot load file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Environment.Exit(1);
+                }
+                int j = 0;
+                int index = 0;
+                foreach (string line in text)
+                {
+                    if (j % 4 == 0) messages[index] = line;
+                    else if (j % 4 == 1) titles[index] = line;
+                    else if (j % 4 == 2)
+                    {
+                        string[] stats = line.Split(';');
+                        icons[index] = int.Parse(stats[0]);
+                        buttons[index] = int.Parse(stats[1]);
+                        answerRequirements[index] = int.Parse(stats[2]);
+                    }
+                    else index++;
+                    j++;
+                }
+                for (int i = 0; i < index; i++) listBox1.Items.Add("Message box " + (i + 1));
+                button3.Enabled = (listBox1.Items.Count < 10);
+                button1.Enabled = button5.Enabled = true;
+                listBox1.SelectedIndex = -1;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
