@@ -101,6 +101,7 @@ namespace MessageBoxCreator
             saveFileDialog1.Filter = "VBScript|*.vbs";
             saveFileDialog1.Title = "Export Message Box";
             saveFileDialog1.FileName = "messagebox.vbs";
+            saveFileDialog1.InitialDirectory = Environment.GetEnvironmentVariable("userprofile") + "\\Downloads";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter writer = new StreamWriter(saveFileDialog1.OpenFile());
@@ -193,7 +194,7 @@ namespace MessageBoxCreator
         {
             icons[listBox1.SelectedIndex] = comboBox1.SelectedIndex;
         }
-
+        
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             buttons[listBox1.SelectedIndex] = comboBox2.SelectedIndex;
@@ -210,7 +211,7 @@ namespace MessageBoxCreator
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "Message Box Configuration|*.mbconfig";
             fileDialog.Title = "Save Configuration";
-            fileDialog.InitialDirectory = Environment.GetEnvironmentVariable("localappdata") + "\\Programs\\Message Box Creator\\Configurations";
+            fileDialog.InitialDirectory = Environment.GetEnvironmentVariable("appdata") + "\\Message Box Creator\\Configurations";
             fileDialog.FileName = listBox1.Items.Count.ToString() + "_msg_config.mbconfig";
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -233,7 +234,7 @@ namespace MessageBoxCreator
             if (listBox1.Items.Count > 0 && MessageBox.Show("Loading a configuration overwrites the current one.\nDo you want to proceed?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Message Box Configuration|*.mbconfig";
-            fileDialog.InitialDirectory = Environment.GetEnvironmentVariable("localappdata") + "\\Programs\\Message Box Creator\\Configurations";
+            fileDialog.InitialDirectory = Environment.GetEnvironmentVariable("appdata") + "\\Message Box Creator\\Configurations";
             fileDialog.Title = "Load Configuration";
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
