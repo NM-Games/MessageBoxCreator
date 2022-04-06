@@ -210,6 +210,7 @@ namespace MessageBoxCreator
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "Message Box Configuration|*.mbconfig";
             fileDialog.Title = "Save Configuration";
+            fileDialog.InitialDirectory = Environment.GetEnvironmentVariable("localappdata") + "\\Programs\\Message Box Creator\\Configurations";
             fileDialog.FileName = listBox1.Items.Count.ToString() + "_msg_config.mbconfig";
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -232,6 +233,7 @@ namespace MessageBoxCreator
             if (listBox1.Items.Count > 0 && MessageBox.Show("Loading a configuration overwrites the current one.\nDo you want to proceed?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Message Box Configuration|*.mbconfig";
+            fileDialog.InitialDirectory = Environment.GetEnvironmentVariable("localappdata") + "\\Programs\\Message Box Creator\\Configurations";
             fileDialog.Title = "Load Configuration";
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
