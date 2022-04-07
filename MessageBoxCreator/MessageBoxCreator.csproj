@@ -7,7 +7,7 @@
     <ProjectGuid>{04A9EC3E-0811-4C47-92BE-D7A4FB0A9825}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>MessageBoxCreator</RootNamespace>
-    <AssemblyName>MessageBoxCreator</AssemblyName>
+    <AssemblyName>Message Box Creator</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
