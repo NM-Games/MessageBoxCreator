@@ -16,6 +16,7 @@ namespace MessageBoxCreator
         public Form1()
         {
             InitializeComponent();
+            // load by argument passed configuration
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length == 2)
             {
@@ -134,7 +135,8 @@ namespace MessageBoxCreator
             button2.Enabled = (listBox1.SelectedIndex >= 0);
             button4.Enabled = (listBox1.SelectedIndex >= 0);
             groupBox1.Enabled = (listBox1.SelectedIndex >= 0);
-            label10.Enabled = comboBox3.Enabled = (listBox1.SelectedIndex > 0);
+            label10.Enabled = comboBox3.Enabled = button7.Enabled = (listBox1.SelectedIndex > 0);
+            button8.Enabled = (listBox1.Items.Count > 1 && listBox1.SelectedIndex > -1 && listBox1.SelectedIndex < listBox1.Items.Count - 1);
 
             if (listBox1.SelectedIndex < 0) return;
             label6.Enabled = true;
@@ -159,6 +161,7 @@ namespace MessageBoxCreator
             buttons.Concat(new int[] { -1 }).ToArray();
             answerRequirements.Concat(new int[] { 0 }).ToArray();
             int itemIndex = listBox1.Items.Count + 1;
+            if (itemIndex == 2 && listBox1.SelectedIndex == 0) button8.Enabled = true;
             listBox1.Items.Add("Message box " + itemIndex);
         }
 
@@ -270,7 +273,7 @@ namespace MessageBoxCreator
                 button3.Enabled = (listBox1.Items.Count < 10);
                 button1.Enabled = button5.Enabled = true;
                 listBox1.SelectedIndex = -1;
-                groupBox1.Enabled = button4.Enabled = button2.Enabled = false;
+                groupBox1.Enabled = button4.Enabled = button2.Enabled = button7.Enabled = button8.Enabled = false;
                 success("Configuration loaded!");
             }
         }
@@ -287,5 +290,56 @@ namespace MessageBoxCreator
             icons[listBox1.SelectedIndex] = (checkBox1.Checked) ? 256 : icons[listBox1.SelectedIndex]; // 256 * 16 = 4096 -> always on top number
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            int fromIndex = listBox1.SelectedIndex;
+            int toIndex = listBox1.SelectedIndex - 1;
+
+            string currentContent = messages[fromIndex];
+            string currentTitle = titles[fromIndex];
+            int currentIcon = icons[fromIndex];
+            int currentButtons = buttons[fromIndex];
+            int currentAnswerReq = answerRequirements[fromIndex];
+
+            messages[fromIndex] = messages[toIndex];
+            titles[fromIndex] = titles[toIndex];
+            icons[fromIndex] = icons[toIndex];
+            buttons[fromIndex] = buttons[toIndex];
+            answerRequirements[fromIndex] = answerRequirements[toIndex];
+            messages[toIndex] = currentContent;
+            titles[toIndex] = currentTitle;
+            icons[toIndex] = currentIcon;
+            buttons[toIndex] = currentButtons;
+            answerRequirements[toIndex] = currentAnswerReq;
+
+            listBox1.SelectedIndex = toIndex;
+            if (answerRequirements[fromIndex] == -1) answerRequirements[fromIndex] = 0;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            int fromIndex = listBox1.SelectedIndex;
+            int toIndex = listBox1.SelectedIndex + 1;
+
+            string currentContent = messages[fromIndex];
+            string currentTitle = titles[fromIndex];
+            int currentIcon = icons[fromIndex];
+            int currentButtons = buttons[fromIndex];
+            int currentAnswerReq = answerRequirements[fromIndex];
+
+            messages[fromIndex] = messages[toIndex];
+            titles[fromIndex] = titles[toIndex];
+            icons[fromIndex] = icons[toIndex];
+            buttons[fromIndex] = buttons[toIndex];
+            answerRequirements[fromIndex] = answerRequirements[toIndex];
+            messages[toIndex] = currentContent;
+            titles[toIndex] = currentTitle;
+            icons[toIndex] = currentIcon;
+            buttons[toIndex] = currentButtons;
+            answerRequirements[toIndex] = currentAnswerReq;
+
+            listBox1.SelectedIndex = toIndex;
+            if (comboBox3.SelectedIndex == -1) comboBox3.SelectedIndex = 0;
+        }
     }
 }
