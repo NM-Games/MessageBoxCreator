@@ -52,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>msgboxcreator.ico</ApplicationIcon>
+    <ApplicationIcon>msgboxcreator_new.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>D34158D94D1E3B5D9647557DC1FB776FD235243E</ManifestCertificateThumbprint>
@@ -80,6 +80,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,6 +126,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="msgboxcreator.ico" />
+    <Content Include="msgboxcreator_new.ico" />
+    <None Include="Resources\msgboxcreator_new.ico" />
     <None Include="Resources\logo-wide.png" />
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -50,16 +49,13 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button9 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -74,7 +70,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 19F);
-            this.label1.Location = new System.Drawing.Point(36, 45);
+            this.label1.Location = new System.Drawing.Point(20, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(324, 37);
             this.label1.TabIndex = 1;
@@ -260,16 +256,16 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(532, 25);
+            this.listBox1.Location = new System.Drawing.Point(576, 25);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(181, 164);
+            this.listBox1.Size = new System.Drawing.Size(137, 164);
             this.listBox1.TabIndex = 5;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button3
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button3.Location = new System.Drawing.Point(428, 23);
+            this.button3.Location = new System.Drawing.Point(472, 23);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(93, 29);
             this.button3.TabIndex = 6;
@@ -281,7 +277,7 @@
             // 
             this.button4.Enabled = false;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button4.Location = new System.Drawing.Point(428, 58);
+            this.button4.Location = new System.Drawing.Point(472, 58);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(93, 29);
             this.button4.TabIndex = 7;
@@ -299,28 +295,6 @@
             this.label6.TabIndex = 8;
             this.label6.Text = "Preview may look different than exported file.";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox1.Image = global::MessageBoxCreator.Properties.Resources.logo_wide;
-            this.pictureBox1.Location = new System.Drawing.Point(129, 95);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(205, 65);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 9;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.label7.Location = new System.Drawing.Point(75, 109);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(43, 31);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "by";
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -336,7 +310,7 @@
             // 
             this.button5.Enabled = false;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button5.Location = new System.Drawing.Point(428, 93);
+            this.button5.Location = new System.Drawing.Point(472, 93);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(93, 29);
             this.button5.TabIndex = 12;
@@ -347,7 +321,7 @@
             // button6
             // 
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button6.Location = new System.Drawing.Point(428, 128);
+            this.button6.Location = new System.Drawing.Point(472, 128);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(93, 29);
             this.button6.TabIndex = 13;
@@ -359,7 +333,7 @@
             // 
             this.button7.Enabled = false;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button7.Location = new System.Drawing.Point(428, 163);
+            this.button7.Location = new System.Drawing.Point(472, 163);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(43, 29);
             this.button7.TabIndex = 14;
@@ -371,7 +345,7 @@
             // 
             this.button8.Enabled = false;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button8.Location = new System.Drawing.Point(478, 163);
+            this.button8.Location = new System.Drawing.Point(522, 163);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(43, 29);
             this.button8.TabIndex = 15;
@@ -379,18 +353,28 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // button9
+            // 
+            this.button9.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button9.Location = new System.Drawing.Point(27, 160);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(117, 29);
+            this.button9.TabIndex = 16;
+            this.button9.Text = "About...";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(732, 507);
+            this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -403,10 +387,10 @@
             this.Icon = global::MessageBoxCreator.Properties.Resources.msgboxcreator;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Message Box Creator " + ProductVersion.ToString();
+            this.Text = "Message Box Creator";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.quitAttempt);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -430,8 +414,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
@@ -442,7 +424,7 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button button9;
     }
 }
 

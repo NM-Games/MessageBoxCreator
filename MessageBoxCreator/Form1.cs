@@ -341,5 +341,17 @@ namespace MessageBoxCreator
             listBox1.SelectedIndex = toIndex;
             if (comboBox3.SelectedIndex == -1) comboBox3.SelectedIndex = 0;
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
+
+        private void quitAttempt(object sender, FormClosingEventArgs e)
+        {
+            if (!button5.Enabled) return;
+            if (MessageBox.Show("Are you sure you want to exit?\nUnsaved data will be lost!", "Please confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) e.Cancel = true;
+        }
     }
 }
