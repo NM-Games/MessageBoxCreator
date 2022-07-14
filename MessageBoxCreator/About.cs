@@ -20,14 +20,17 @@ namespace MessageBoxCreator
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // GitHub button
             System.Diagnostics.Process.Start("cmd.exe", "/c start https://github.com/ILoveAndLikePizza/MessageBoxCreator");
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            // Discord button
             System.Diagnostics.Process.Start("cmd.exe", "/c start https://discord.gg/CaMaGRXDqB");
         }
         private void button3_Click(object sender, EventArgs e)
         {
+            // Website button
             System.Diagnostics.Process.Start("cmd.exe", "/c start https://nm-games.eu");
         }
     }

@@ -46,8 +46,16 @@ namespace MessageBoxCreator
                 for (int i = 0; i < index; i++) listBox1.Items.Add("Message box " + (i + 1));
                 button3.Enabled = (listBox1.Items.Count < 10);
                 button1.Enabled = button5.Enabled = true;
+                string[] directories = fragments[0].Split('\\');
+                SetLoadedConfig(directories[directories.Length - 1]);
                 listBox1.SelectedIndex = -1;
+
             }
+        }
+        private void SetLoadedConfig(string name)
+        {
+            Text = name + " | Message Box Creator";
+            LoadedConfig = name;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -101,7 +109,7 @@ namespace MessageBoxCreator
             }
             saveFileDialog1.Filter = "VBScript|*.vbs";
             saveFileDialog1.Title = "Export Message Box";
-            saveFileDialog1.FileName = "messagebox.vbs";
+            saveFileDialog1.FileName = (LoadedConfig.Length > 0) ? LoadedConfig + ".vbs" : "messagebox.vbs";
             saveFileDialog1.InitialDirectory = Environment.GetEnvironmentVariable("userprofile") + "\\Downloads";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -124,6 +132,7 @@ namespace MessageBoxCreator
         private int[] icons = new int[10] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
         private int[] buttons = new int[10] {-1, -1, -1, -1, -1, -1, -1, -1, -1 ,-1};
         private int[] answerRequirements = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        private string LoadedConfig = "";
 
         private void success(string content)
         {
@@ -215,10 +224,11 @@ namespace MessageBoxCreator
             fileDialog.Filter = "Message Box Configuration|*.mbconfig";
             fileDialog.Title = "Save Configuration";
             fileDialog.InitialDirectory = Environment.GetEnvironmentVariable("appdata") + "\\Message Box Creator\\Configurations";
-            fileDialog.FileName = listBox1.Items.Count.ToString() + "_msg_config.mbconfig";
+            fileDialog.FileName = (LoadedConfig.Length > 0) ? LoadedConfig + ".mbconfig" : listBox1.Items.Count.ToString() + "_msg_config.mbconfig";
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
                 StreamWriter writer = new StreamWriter(fileDialog.OpenFile());
+                string[] directories = fileDialog.FileName.Split('.')[0].Split('\\');
                 for (int i = 0; i < listBox1.Items.Count; i++)
                 {
                     writer.WriteLine(messages[i]);
@@ -227,6 +237,7 @@ namespace MessageBoxCreator
                 }
                 writer.Dispose();
                 writer.Close();
+                SetLoadedConfig(directories[directories.Length - 1]);
                 success("Configuration saved!");
             }
         }
@@ -234,7 +245,7 @@ namespace MessageBoxCreator
         private void button6_Click(object sender, EventArgs e)
         {
             // load
-            if (listBox1.Items.Count > 0 && MessageBox.Show("Loading a configuration overwrites the current one.\nDo you want to proceed?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
+            if (listBox1.Items.Count > 0 && MessageBox.Show("When loading a new configuration, the current one will not be saved. Do you want to proceed?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Message Box Configuration|*.mbconfig";
             fileDialog.InitialDirectory = Environment.GetEnvironmentVariable("appdata") + "\\Message Box Creator\\Configurations";
@@ -242,6 +253,7 @@ namespace MessageBoxCreator
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
                 string[] fragments = fileDialog.FileName.Split('.');
+                string[] directories = fragments[0].Split('\\');
                 if (fragments[fragments.Length - 1] != "mbconfig")
                 {
                     MessageBox.Show("You loaded an invalid file!", "Cannot load file", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -274,6 +286,7 @@ namespace MessageBoxCreator
                 button1.Enabled = button5.Enabled = true;
                 listBox1.SelectedIndex = -1;
                 groupBox1.Enabled = button4.Enabled = button2.Enabled = button7.Enabled = button8.Enabled = false;
+                SetLoadedConfig(directories[directories.Length - 1]);
                 success("Configuration loaded!");
             }
         }
@@ -351,7 +364,9 @@ namespace MessageBoxCreator
         private void quitAttempt(object sender, FormClosingEventArgs e)
         {
             if (!button5.Enabled) return;
-            if (MessageBox.Show("Are you sure you want to exit?\nUnsaved data will be lost!", "Please confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) e.Cancel = true;
+            DialogResult prompt = MessageBox.Show("Do you want to save your changes?", "Please confirm:", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (prompt == DialogResult.Yes) button5_Click(sender, e);
+            else if (prompt == DialogResult.Cancel) e.Cancel = true;
         }
     }
 }
