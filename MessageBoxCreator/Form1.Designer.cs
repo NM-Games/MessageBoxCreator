@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -44,18 +47,26 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -70,7 +81,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F);
-            this.label1.Location = new System.Drawing.Point(20, 25);
+            this.label1.Location = new System.Drawing.Point(75, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(380, 42);
             this.label1.TabIndex = 1;
@@ -78,8 +89,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.comboBox4);
+            this.groupBox1.Controls.Add(this.checkBox2);
             this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.comboBox3);
             this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.comboBox2);
@@ -93,10 +106,43 @@
             this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(17, 207);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(696, 233);
+            this.groupBox1.Size = new System.Drawing.Size(696, 244);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Properties";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(22, 199);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(159, 16);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Button focused by default:";
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "OK"});
+            this.comboBox4.Location = new System.Drawing.Point(214, 196);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(135, 24);
+            this.comboBox4.TabIndex = 14;
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.checkBox2.Location = new System.Drawing.Point(498, 199);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(172, 21);
+            this.checkBox2.TabIndex = 13;
+            this.checkBox2.Text = "Make text right-aligned";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // label10
             // 
@@ -106,18 +152,6 @@
             this.label10.Size = new System.Drawing.Size(282, 16);
             this.label10.TabIndex = 12;
             this.label10.Text = "Required answer from previous box to display:";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label9.Location = new System.Drawing.Point(192, 197);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(273, 16);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "Note: the icon will no longer be visible!";
-            this.label9.Visible = false;
             // 
             // comboBox3
             // 
@@ -143,7 +177,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.checkBox1.Location = new System.Drawing.Point(25, 196);
+            this.checkBox1.Location = new System.Drawing.Point(498, 158);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(156, 21);
             this.checkBox1.TabIndex = 9;
@@ -232,7 +266,7 @@
             // 
             this.button1.Enabled = false;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(620, 459);
+            this.button1.Location = new System.Drawing.Point(620, 614);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(93, 29);
             this.button1.TabIndex = 3;
@@ -244,7 +278,7 @@
             // 
             this.button2.Enabled = false;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button2.Location = new System.Drawing.Point(515, 459);
+            this.button2.Location = new System.Drawing.Point(515, 614);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(93, 29);
             this.button2.TabIndex = 4;
@@ -271,6 +305,7 @@
             this.button3.Size = new System.Drawing.Size(45, 33);
             this.button3.TabIndex = 6;
             this.button3.Text = "+";
+            this.toolTip1.SetToolTip(this.button3, "Add message box");
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -284,6 +319,7 @@
             this.button4.Size = new System.Drawing.Size(45, 33);
             this.button4.TabIndex = 7;
             this.button4.Text = "-";
+            this.toolTip2.SetToolTip(this.button4, "Remove selected message box");
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -291,43 +327,32 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Enabled = false;
-            this.label6.Location = new System.Drawing.Point(214, 465);
+            this.label6.Location = new System.Drawing.Point(221, 620);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(270, 16);
             this.label6.TabIndex = 8;
             this.label6.Text = "Preview may look different than exported file.";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.Color.Green;
-            this.label8.Location = new System.Drawing.Point(24, 465);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(0, 16);
-            this.label8.TabIndex = 11;
-            this.label8.Visible = false;
-            // 
             // button5
             // 
             this.button5.Enabled = false;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button5.Location = new System.Drawing.Point(17, 160);
+            this.button5.Location = new System.Drawing.Point(16, 25);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(150, 29);
+            this.button5.Size = new System.Drawing.Size(76, 29);
             this.button5.TabIndex = 12;
-            this.button5.Text = "Save Configuration...";
+            this.button5.Text = "Save";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button6.Location = new System.Drawing.Point(173, 160);
+            this.button6.Location = new System.Drawing.Point(98, 25);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(150, 29);
+            this.button6.Size = new System.Drawing.Size(76, 29);
             this.button6.TabIndex = 13;
-            this.button6.Text = "Load Configuration...";
+            this.button6.Text = "Load";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -341,6 +366,7 @@
             this.button7.Size = new System.Drawing.Size(45, 33);
             this.button7.TabIndex = 14;
             this.button7.Text = "▲";
+            this.toolTip3.SetToolTip(this.button7, "Move selected message box up");
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
@@ -354,13 +380,14 @@
             this.button8.Size = new System.Drawing.Size(45, 33);
             this.button8.TabIndex = 15;
             this.button8.Text = "▼";
+            this.toolTip4.SetToolTip(this.button8, "Move selected message box down");
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button9.Location = new System.Drawing.Point(329, 160);
+            this.button9.Location = new System.Drawing.Point(238, 140);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(96, 29);
             this.button9.TabIndex = 16;
@@ -368,17 +395,61 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.button5);
+            this.groupBox2.Controls.Add(this.button6);
+            this.groupBox2.Location = new System.Drawing.Point(17, 115);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(190, 69);
+            this.groupBox2.TabIndex = 17;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Your Configuration";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::MessageBoxCreator.Properties.Resources.msgboxcreator_new;
+            this.pictureBox1.Location = new System.Drawing.Point(17, 22);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(49, 51);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 18;
+            this.pictureBox1.TabStop = false;
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.HorizontalScrollbar = true;
+            this.listBox2.ItemHeight = 16;
+            this.listBox2.Location = new System.Drawing.Point(17, 466);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.listBox2.Size = new System.Drawing.Size(696, 132);
+            this.listBox2.TabIndex = 19;
+            // 
+            // button10
+            // 
+            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.button10.Location = new System.Drawing.Point(17, 614);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(93, 29);
+            this.button10.TabIndex = 20;
+            this.button10.Text = "Clear Log";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(732, 507);
+            this.ClientSize = new System.Drawing.Size(732, 660);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -395,6 +466,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.quitAttempt);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -413,15 +486,12 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label10;
@@ -429,6 +499,17 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.ToolTip toolTip2;
+        private System.Windows.Forms.ToolTip toolTip3;
+        private System.Windows.Forms.ToolTip toolTip4;
     }
 }
 
