@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -310,6 +311,7 @@ namespace MessageBoxCreator
                         else index++;
                         j++;
                     }
+                    reader.Close();
                     listBox1.Items.Clear();
                     for (int i = 0; i < index; i++) listBox1.Items.Add("Message box " + (i + 1));
                     button3.Enabled = (listBox1.Items.Count < 10);
@@ -387,6 +389,26 @@ namespace MessageBoxCreator
         private void button10_Click(object sender, EventArgs e)
         {
             listBox2.Items.Clear();
+        }
+
+        private async void Form1_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("User-Agent", "The Message Box Creator Application");
+                HttpResponseMessage response = client.GetAsync("https://api.github.com/repos/ILoveAndLikePizza/MessageBoxCreator/releases/latest").Result;
+                response.EnsureSuccessStatusCode();
+                string responseText = await response.Content.ReadAsStringAsync();
+                if (!responseText.Contains("\"name\":\"Message Box Creator v" + ProductVersion + "\""))
+                {
+                    if (MessageBox.Show("There is a new update available for Message Box Creator.\nWould you like to visit the download page?", "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) System.Diagnostics.Process.Start("cmd.exe", "/c start https://github.com/ILoveAndLikePizza/MessageBoxCreator/releases");
+                }
+            }
+            catch (Exception)
+            {
+                log("INFO", "Unable to search for new updates right now.");
+            }
         }
     }
 
